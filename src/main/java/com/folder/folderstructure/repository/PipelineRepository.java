@@ -11,11 +11,8 @@ import java.util.Optional;
 @Repository
 public interface PipelineRepository extends JpaRepository<Pipeline,Long> {
 
-    // This method retrieves all pipelines within a specific folder.
     List<Pipeline> findByFolder(Folder folder);
-
-    // This method finds a pipeline by its name within a folder, used to ensure pipeline names are unique within a folder.
     Optional<Pipeline> findByNameAndFolder(String name, Folder folder);
 
-    // You can define other custom methods as needed.
+
 }
