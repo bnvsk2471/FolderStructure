@@ -14,6 +14,6 @@ public class FolderDTO {
     private Long id;
     private String name;
     private Long parentId;
-    private List<FolderDTO> subFolders; // Nested sub-folders
-    private List<PipelineDTO> pipelines; // Associated pipelines
+    private List<FolderDTO> subFolders;
+    //private List<PipelineDTO> pipelines;
 }

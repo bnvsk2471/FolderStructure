@@ -1,5 +1,6 @@
 package com.folder.folderstructure.controller;
 
+import com.folder.folderstructure.dto.FolderDTO;
 import com.folder.folderstructure.entity.Folder;
 import com.folder.folderstructure.dto.FolderBinding;
 import com.folder.folderstructure.exception.FolderNotFoundException;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/folders")
@@ -44,6 +47,12 @@ public class FolderController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/structure")
+    public ResponseEntity<List<FolderDTO>> getFolderStructure() {
+        List<FolderDTO> folderStructure = folderService.getFolderStructure();
+        return new ResponseEntity<>(folderStructure, HttpStatus.OK);
     }
 
     @ExceptionHandler(FolderNotFoundException.class)

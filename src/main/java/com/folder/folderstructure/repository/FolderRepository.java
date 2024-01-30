@@ -13,7 +13,7 @@ public interface FolderRepository extends JpaRepository<Folder, Long> {
 
     List<Folder> findByParentFolderIsNull();
     Optional<Folder> findByNameAndParentFolder(String name, Folder parentFolder);
-    Optional<Folder> findByNameAndParentFolderIsNull(String name);
+    //Optional<Folder> findByNameAndParentFolderIsNull(String name);
 
 
 }

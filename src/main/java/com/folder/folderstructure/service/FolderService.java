@@ -1,9 +1,7 @@
 package com.folder.folderstructure.service;
 
 import com.folder.folderstructure.dto.FolderDTO;
-import com.folder.folderstructure.dto.PipelineDTO;
 import com.folder.folderstructure.entity.Folder;
-import com.folder.folderstructure.entity.Pipeline;
 import com.folder.folderstructure.exception.FolderNotFoundException;
 import com.folder.folderstructure.repository.FolderRepository;
 import jakarta.transaction.Transactional;
@@ -23,8 +21,6 @@ public class FolderService {
         this.folderRepository = folderRepository;
     }
 
-
-
     public Folder createFolder(String name, Long parentId) throws Exception{
         Folder parentFolder=null;
         if (parentId !=null){
@@ -43,19 +39,14 @@ public class FolderService {
     @Transactional
     public void deleteFolder(Long folderId) throws Exception{
         Folder folder=folderRepository.findById(folderId)
-                .orElseThrow();
-        //deleteSubFoldersAndPipelines(folder);
+                .orElseThrow(()->new FolderNotFoundException("Folder Not Found"));
         folderRepository.delete(folder);
     }
 
-    /*private void deleteSubFoldersAndPipelines(Folder folder){
-        folder.getSubFolders().forEach(this::deleteSubFoldersAndPipelines);
-        folderRepository.deleteAll(folder.getSubFolders());
-    }*/
 
-    public FolderDTO getFolderStructure() {
+    public List<FolderDTO> getFolderStructure() {
         List<Folder> rootFolders = folderRepository.findByParentFolderIsNull();
-        return (FolderDTO) rootFolders.stream()
+        return  rootFolders.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
@@ -66,16 +57,7 @@ public class FolderService {
         dto.setSubFolders(folder.getSubFolders().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList()));
-        dto.setPipelines(folder.getPipelines().stream()
-                .map(this::convertPipelineToDTO)
-                .collect(Collectors.toList()));
         return dto;
     }
 
-    private PipelineDTO convertPipelineToDTO(Pipeline pipeline) {
-        PipelineDTO dto = new PipelineDTO();
-        dto.setId(pipeline.getId());
-        dto.setName(pipeline.getName());
-        return dto;
-    }
 }

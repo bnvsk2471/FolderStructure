@@ -27,8 +27,8 @@ public class Folder {
     @OneToMany(mappedBy = "parentFolder", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Folder> subFolders = new HashSet<>();
 
-    @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Pipeline> pipelines = new HashSet<>();
+   /* @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Pipeline> pipelines = new HashSet<>();*/
 
     @Override
     public boolean equals(Object o) {
@@ -77,13 +77,6 @@ public class Folder {
         this.subFolders = subFolders;
     }
 
-    public Set<Pipeline> getPipelines() {
-        return pipelines;
-    }
-
-    public void setPipelines(Set<Pipeline> pipelines) {
-        this.pipelines = pipelines;
-    }
 
 
 }
